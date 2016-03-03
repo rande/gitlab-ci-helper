@@ -51,6 +51,10 @@ Usage: gitlab-helper ci:revision [options]
 Options:
 
   -verbose            Add verbose information to the output
+
+Env Variables:
+
+  CI_BUILD_REF        Get the revision from this variable
 `
 	return strings.TrimSpace(helpText)
 }

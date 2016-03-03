@@ -48,6 +48,12 @@ func main() {
 				Ui: ui,
 			}, nil
 		},
+		"dump:readme": func() (cli.Command, error) {
+			return &commands.DumpReadmeCommand{
+				Ui:       ui,
+				Commands: c.Commands,
+			}, nil
+		},
 	}
 
 	exitStatus, _ := c.Run()

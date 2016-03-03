@@ -111,6 +111,13 @@ Arguments:
 Options:
 
   -verbose            Add verbose information to the output
+
+Credentials are retrieved from environment:
+
+  GITLAB_HOST         The gitlab host
+  GITLAB_TOKEN        The user's token
+  GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
+
 `
 	return strings.TrimSpace(helpText)
 }
