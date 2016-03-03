@@ -8,7 +8,6 @@ package main
 import (
 	"github.com/mitchellh/cli"
 	"github.com/rande/gitlab-ci-helper/commands"
-	"log"
 	"os"
 )
 
@@ -46,11 +45,7 @@ func main() {
 		},
 	}
 
-	exitStatus, err := c.Run()
-
-	if err != nil {
-		log.Println(err)
-	}
+	exitStatus, _ := c.Run()
 
 	os.Exit(exitStatus)
 }

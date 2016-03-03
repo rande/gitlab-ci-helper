@@ -11,15 +11,12 @@ import (
 	"github.com/mitchellh/cli"
 	gitlab "github.com/plouc/go-gitlab-client"
 	helper "github.com/rande/gitlab-ci-helper"
+	"strings"
 )
 
 type ProjectsListCommand struct {
 	Ui      cli.Ui
 	Verbose bool
-}
-
-func (c *ProjectsListCommand) Help() string {
-	return `Return the list of projects available.`
 }
 
 func (c *ProjectsListCommand) Run(args []string) int {
@@ -58,4 +55,17 @@ func (c *ProjectsListCommand) Run(args []string) int {
 
 func (c *ProjectsListCommand) Synopsis() string {
 	return "Return the list of projects available."
+}
+
+func (c *ProjectsListCommand) Help() string {
+	helpText := `
+Usage: gitlab-helper project:list [options] project
+
+  List all projects available
+
+Options:
+
+  -verbose            Add verbose information to the output
+`
+	return strings.TrimSpace(helpText)
 }

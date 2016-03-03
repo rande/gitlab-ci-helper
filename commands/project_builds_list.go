@@ -12,6 +12,7 @@ import (
 	gitlab "github.com/plouc/go-gitlab-client"
 	helper "github.com/rande/gitlab-ci-helper"
 	"strconv"
+	"strings"
 )
 
 var (
@@ -24,10 +25,6 @@ var (
 type ProjectBuildsListCommand struct {
 	Ui      cli.Ui
 	Verbose bool
-}
-
-func (c *ProjectBuildsListCommand) Help() string {
-	return `Return builds available for the provided project.`
 }
 
 func (c *ProjectBuildsListCommand) Run(args []string) int {
@@ -47,7 +44,7 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 	if len(args) != 1 {
 		flags.Usage()
 
-		fmt.Printf("Error: %s", "Invalid number of arguments")
+		c.Ui.Error(fmt.Sprintf("\nError: %s", "Invalid number of arguments"))
 
 		return 1
 	}
@@ -68,7 +65,10 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 	builds, err := client.ProjectBuilds(strconv.FormatInt(int64(project.Id), 10))
 
 	if err != nil {
-		fmt.Printf("Error: %s", err.Error())
+
+		flags.Usage()
+
+		c.Ui.Error(fmt.Sprintf("\nError: %s", err.Error()))
 
 		return 1
 	}
@@ -96,4 +96,21 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 
 func (c *ProjectBuildsListCommand) Synopsis() string {
 	return "Return builds available for the provided project."
+}
+
+func (c *ProjectBuildsListCommand) Help() string {
+	helpText := `
+Usage: gitlab-helper project:builds:list [options] project
+
+  List all builds available for the provide project
+
+Arguments:
+
+  project             Can be an id or a string: namespace/name
+
+Options:
+
+  -verbose            Add verbose information to the output
+`
+	return strings.TrimSpace(helpText)
 }

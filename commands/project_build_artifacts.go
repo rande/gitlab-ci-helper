@@ -22,6 +22,9 @@ type ProjectBuildArtifactCommand struct {
 	Verbose       bool
 	ExtractPath   string
 	ArtifactsFile string
+	BuildId       string
+	Stage         string
+	Ref           string
 }
 
 func (c *ProjectBuildArtifactCommand) Run(args []string) int {
@@ -33,7 +36,11 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 
 	flags.BoolVar(&c.Verbose, "verbose", false, "")
 	flags.StringVar(&c.ArtifactsFile, "file", "artifacts.zip", "Artifacts file name")
-	flags.StringVar(&c.ExtractPath, "path", "", "The path to extract the archive")
+	flags.StringVar(&c.ExtractPath, "path", "", "The path to extract the artifacts")
+	flags.StringVar(&c.BuildId, "build", "", "The build number to get the artifacts")
+
+	flags.StringVar(&c.Stage, "stage", "package", "The stage to search the artifacts")
+	flags.StringVar(&c.Ref, "ref", "", "The reference (sha1) to search the artifacts")
 
 	if err := flags.Parse(args); err != nil {
 		return 1
@@ -41,7 +48,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 
 	args = flags.Args()
 
-	if len(args) != 2 {
+	if len(args) != 1 {
 		flags.Usage()
 
 		c.Ui.Error(fmt.Sprintf("Error: %s", "Invalid number of arguments"))
@@ -62,10 +69,36 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 
 	c.Ui.Output(fmt.Sprintf("Found project: %s/%s (id: %d)", project.Namespace.Name, project.Name, project.Id))
 
-	build, err := helper.GetBuild(project, args[1], client)
+	var build *gitlab.Build
 
-	if err != nil {
-		c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
+	if len(c.BuildId) > 0 {
+		build, err = helper.GetBuild(project, c.BuildId, client)
+
+		if err != nil {
+			c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
+
+			return 1
+		}
+
+	} else if len(c.Stage) > 0 && len(c.Ref) > 0 {
+		builds, err := client.ProjectBuilds(strconv.FormatInt(int64(project.Id), 10))
+
+		if err != nil {
+			c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
+
+			return 1
+		}
+
+		for _, b := range builds {
+			if b.Stage == c.Stage && b.Commit.Id == c.Ref {
+				build = b
+				break
+			}
+		}
+	}
+
+	if build == nil {
+		c.Ui.Error(fmt.Sprintf("Error: %s", "Unable to found the build"))
 
 		return 1
 	}
@@ -126,9 +159,14 @@ Usage: gitlab-helper project:builds:artifacts [options] project build
 
 Options:
 
+  -build=XX           The build number used to retrieved the related artifact
+  -stage=XX           The stage to search the build (must be used with -ref, default: package)
+  -ref=XX             The sha1 linked to the build (must be used with -stage)
   -file=artifacts.zip The path to the artifact file (default: artifacts.zip)
   -path=./package     The path to extract the command. If not set, the artifact will not
                       be extracted.
+  -verbose            Add verbose information to the output
 `
+
 	return strings.TrimSpace(helpText)
 }
