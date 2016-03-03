@@ -34,6 +34,16 @@ func main() {
 				Ui: ui,
 			}, nil
 		},
+		"ci:meta": func() (cli.Command, error) {
+			return &commands.CiDumpInfoCommand{
+				Ui: ui,
+			}, nil
+		},
+		"ci:revision": func() (cli.Command, error) {
+			return &commands.CiDumpRevisionCommand{
+				Ui: ui,
+			}, nil
+		},
 	}
 
 	exitStatus, err := c.Run()
