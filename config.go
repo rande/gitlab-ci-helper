@@ -7,22 +7,37 @@ package gitlab_ci_helper
 
 import "os"
 
-type Config struct {
+type GitLabConfig struct {
 	Host    string `json:"host"`
 	Token   string `json:"token"`
 	ApiPath string `json:"api_path"`
 }
 
+type MailerConfig struct {
+	SubjectPrefix string   `json:"subject"`
+	Sender        string   `json:"sender"`
+	Dest          []string `json:"dest"`
+	Host          string   `json:"host"`
+	Username      string   `json:"username"`
+	Password      string   `json:"password"`
+}
+
+type Config struct {
+	Gitlab *GitLabConfig `json:"gitlab"`
+}
+
 func NewConfig() *Config {
-	c := &Config{
+	gitlab := &GitLabConfig{
 		Host:    os.Getenv("GITLAB_HOST"),
 		Token:   os.Getenv("GITLAB_TOKEN"),
 		ApiPath: os.Getenv("GITLAB_API_PATH"),
 	}
 
-	if c.ApiPath == "" {
-		c.ApiPath = "/api/v3"
+	if gitlab.ApiPath == "" {
+		gitlab.ApiPath = "/api/v3"
 	}
 
-	return c
+	return &Config{
+		Gitlab: gitlab,
+	}
 }

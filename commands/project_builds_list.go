@@ -50,7 +50,7 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 	}
 
 	config := helper.NewConfig()
-	client := gitlab.NewGitlab(config.Host, config.ApiPath, config.Token)
+	client := gitlab.NewGitlab(config.Gitlab.Host, config.Gitlab.ApiPath, config.Gitlab.Token)
 
 	project, err := helper.GetProject(args[0], client)
 

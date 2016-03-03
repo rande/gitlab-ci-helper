@@ -34,11 +34,11 @@ func (c *ProjectsListCommand) Run(args []string) int {
 
 	config := helper.NewConfig()
 
-	gitlab := gitlab.NewGitlab(config.Host, config.ApiPath, config.Token)
+	client := gitlab.NewGitlab(config.Gitlab.Host, config.Gitlab.ApiPath, config.Gitlab.Token)
 
 	c.Ui.Output("Trying to find project from options")
 
-	projects, err := gitlab.Projects()
+	projects, err := client.Projects()
 
 	if err != nil {
 		c.Ui.Error(err.Error())
