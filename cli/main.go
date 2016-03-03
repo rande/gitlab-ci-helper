@@ -43,6 +43,11 @@ func main() {
 				Ui: ui,
 			}, nil
 		},
+		"ci:notify:hipchat": func() (cli.Command, error) {
+			return &commands.CiNotificationHipchatCommand{
+				Ui: ui,
+			}, nil
+		},
 	}
 
 	exitStatus, _ := c.Run()

@@ -123,3 +123,11 @@ func Unzip(archive, target string) error {
 
 	return nil
 }
+
+func GetEnv(name, deflt string) string {
+	if len(os.Getenv(name)) == 0 {
+		return deflt
+	}
+
+	return os.Getenv(name)
+}
