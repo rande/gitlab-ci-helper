@@ -113,7 +113,7 @@ func (c *CiNotificationHipchatCommand) Run(args []string) int {
 
 	resp.Body.Close()
 
-	return 1
+	return 0
 }
 
 func (c *CiNotificationHipchatCommand) Synopsis() string {

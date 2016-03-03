@@ -88,7 +88,7 @@ func (c *CiDumpInfoCommand) Run(args []string) int {
 
 	out.WriteTo(fp)
 
-	return 1
+	return 0
 }
 
 func (c *CiDumpInfoCommand) Synopsis() string {
@@ -97,7 +97,7 @@ func (c *CiDumpInfoCommand) Synopsis() string {
 
 func (c *CiDumpInfoCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper ci:meta [options] project build
+Usage: gitlab-helper ci:meta [options]
 
   Dump meta information about ci into a ci.json file
 

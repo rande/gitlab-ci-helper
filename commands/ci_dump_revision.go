@@ -35,7 +35,7 @@ func (c *CiDumpRevisionCommand) Run(args []string) int {
 
 	fp.Write([]byte(os.Getenv("CI_BUILD_REF")))
 
-	return 1
+	return 0
 }
 
 func (c *CiDumpRevisionCommand) Synopsis() string {

@@ -43,14 +43,14 @@ func (c *ProjectsListCommand) Run(args []string) int {
 	if err != nil {
 		c.Ui.Error(err.Error())
 
-		return 0
+		return 1
 	}
 
 	for _, p := range projects {
 		c.Ui.Output(fmt.Sprintf(" > % 4d - %s - %s", p.Id, p.Name, p.Namespace.Name))
 	}
 
-	return 1
+	return 0
 }
 
 func (c *ProjectsListCommand) Synopsis() string {
