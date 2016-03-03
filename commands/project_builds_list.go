@@ -88,7 +88,7 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 			status = icon_red
 		}
 
-		c.Ui.Output(fmt.Sprintf(" > %s  %s % 4d - %-15s ref: %-25s short id: %s", status, artifacts, b.ID, b.Name, b.Ref, b.Commit.Short_Id))
+		c.Ui.Output(fmt.Sprintf(" > %s  %s % 4d - %-15s ref: %-25s short id: %s", status, artifacts, b.Id, b.Name, b.Ref, b.Commit.Short_Id))
 	}
 
 	return 0

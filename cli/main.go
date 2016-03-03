@@ -14,11 +14,6 @@ func main() {
 	c.Args = os.Args[1:]
 
 	c.Commands = map[string]cli.CommandFactory{
-		"build:artifacts": func() (cli.Command, error) {
-			return &commands.BuildDownloadArtifactsCommand{
-				Ui: ui,
-			}, nil
-		},
 		"project:list": func() (cli.Command, error) {
 			return &commands.ProjectsListCommand{
 				Ui: ui,
@@ -26,6 +21,11 @@ func main() {
 		},
 		"project:builds": func() (cli.Command, error) {
 			return &commands.ProjectBuildsListCommand{
+				Ui: ui,
+			}, nil
+		},
+		"project:builds:artifacts": func() (cli.Command, error) {
+			return &commands.ProjectBuildArtifactCommand{
 				Ui: ui,
 			}, nil
 		},
