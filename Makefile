@@ -26,7 +26,7 @@ build:
 	GOOS=darwin GOARCH=amd64 go build -o build/darwin/amd64/gitlab-ci-helper cli/main.go
 	GOOS=linux  GOARCH=amd64 go build -o build/linux/amd64/gitlab-ci-helper cli/main.go
 
-release:
+release: build
 	github-release delete  --tag master --user rande --repo gitlab-ci-helper|| exit 0
 	github-release release --tag master --user rande --repo gitlab-ci-helper --name "Beta release" --pre-release
 	github-release upload  --tag master --user rande --repo gitlab-ci-helper --name "gitlab-ci-helper-osx-amd64"   --file build/darwin/amd64/gitlab-ci-helper
