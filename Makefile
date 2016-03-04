@@ -1,9 +1,9 @@
 .PHONY: test run update format install build relase
 
 install:
+	go get github.com/aktau/github-release
 	go list -f '{{range .Imports}}{{.}} {{end}}' ./... | xargs go get -v
 	go list -f '{{range .TestImports}}{{.}} {{end}}' ./... | xargs go get -v
-	go build -v ./...
 
 update:
 	go get -u all
