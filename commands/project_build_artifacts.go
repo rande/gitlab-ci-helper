@@ -80,8 +80,8 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 			return 1
 		}
 
-	} else if len(c.Stage) > 0 && len(c.Ref) > 0 {
-		builds, err := client.ProjectBuilds(strconv.FormatInt(int64(project.Id), 10))
+	} else if len(c.Ref) > 0 {
+		builds, err := client.ProjectCommitBuilds(strconv.FormatInt(int64(project.Id), 10), c.Ref)
 
 		if err != nil {
 			c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
@@ -90,7 +90,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 		}
 
 		for _, b := range builds {
-			if b.Stage == c.Stage && b.Commit.Id == c.Ref {
+			if b.Stage == c.Stage {
 				build = b
 				break
 			}
