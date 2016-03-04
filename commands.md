@@ -21,6 +21,8 @@
       message             The message to send
     
     Options:
+      -color              The message color (default: gray, values: yellow, green, red, purple, gray, random)
+      -notify             Whether this message should trigger a user notification (default: false)
       -token              The room's token (default: env var HIPCHAT_TOKEN)
       -server             The hipchat server, default to env var HIPCHAT_SERVER, then https://api.hipchat.com
       -verbose            Add verbose information to the output

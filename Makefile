@@ -14,6 +14,7 @@ run:
 format:
 	gofmt -l -w -s .
 	go fix ./...
+	go run cli/main.go dump:readme > commands.md
 
 test:
 	go test -v ./...
