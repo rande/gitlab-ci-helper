@@ -107,8 +107,6 @@ func (c *CiNotificationHipchatCommand) Run(args []string) int {
 
 	resp, _ := client.Do(r)
 
-	fmt.Println(resp.Status)
-
 	io.Copy(os.Stdout, resp.Body)
 
 	resp.Body.Close()

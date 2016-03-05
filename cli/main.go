@@ -8,6 +8,7 @@ package main
 import (
 	"github.com/mitchellh/cli"
 	"github.com/rande/gitlab-ci-helper/commands"
+	"github.com/rande/gitlab-ci-helper/integrations/flowdock"
 	"os"
 )
 
@@ -43,8 +44,18 @@ func main() {
 				Ui: ui,
 			}, nil
 		},
-		"ci:notify:hipchat": func() (cli.Command, error) {
+		"hipchat:message": func() (cli.Command, error) {
 			return &commands.CiNotificationHipchatCommand{
+				Ui: ui,
+			}, nil
+		},
+		"flowdock:message": func() (cli.Command, error) {
+			return &flowdock.CiFlowdockMessageCommand{
+				Ui: ui,
+			}, nil
+		},
+		"flowdock:status": func() (cli.Command, error) {
+			return &flowdock.CiFlowdockStatusCommand{
 				Ui: ui,
 			}, nil
 		},
