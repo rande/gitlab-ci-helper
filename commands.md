@@ -134,12 +134,13 @@
 
 ### project:builds:artifacts
 
-    Usage: gitlab-ci-helper project:builds:artifacts [options] project build
+    Usage: gitlab-ci-helper project:builds:artifacts [options]
     
       Download an artifacts and extract it if the 'path' option is provided
     
     Options:
     
+      -project=XX         The project reference
       -build=XX           The build number used to retrieved the related artifact
       -stage=XX           The stage to search the build (must be used with -ref, default: package)
       -ref=XX             The sha1 linked to the build (must be used with -stage)

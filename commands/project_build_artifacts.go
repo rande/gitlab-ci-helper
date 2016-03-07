@@ -25,6 +25,7 @@ type ProjectBuildArtifactCommand struct {
 	BuildId       string
 	Stage         string
 	Ref           string
+	Project       string
 }
 
 func (c *ProjectBuildArtifactCommand) Run(args []string) int {
@@ -40,7 +41,8 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	flags.StringVar(&c.BuildId, "build", "", "The build number to get the artifacts")
 
 	flags.StringVar(&c.Stage, "stage", "package", "The stage to search the artifacts")
-	flags.StringVar(&c.Ref, "ref", "", "The reference (sha1) to search the artifacts")
+	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1) to search the artifacts")
+	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 
 	if err := flags.Parse(args); err != nil {
 		return 1
@@ -48,7 +50,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 
 	args = flags.Args()
 
-	if len(args) != 1 {
+	if len(args) != 0 {
 		flags.Usage()
 
 		c.Ui.Error(fmt.Sprintf("Error: %s", "Invalid number of arguments"))
@@ -59,7 +61,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	config := helper.NewConfig()
 	client := gitlab.NewGitlab(config.Gitlab.Host, config.Gitlab.ApiPath, config.Gitlab.Token)
 
-	project, err := helper.GetProject(args[0], client)
+	project, err := helper.GetProject(c.Project, client)
 
 	if err != nil {
 		c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
@@ -153,12 +155,13 @@ func (c *ProjectBuildArtifactCommand) Synopsis() string {
 
 func (c *ProjectBuildArtifactCommand) Help() string {
 	helpText := `
-Usage: gitlab-ci-helper project:builds:artifacts [options] project build
+Usage: gitlab-ci-helper project:builds:artifacts [options]
 
   Download an artifacts and extract it if the 'path' option is provided
 
 Options:
 
+  -project=XX         The project reference
   -build=XX           The build number used to retrieved the related artifact
   -stage=XX           The stage to search the build (must be used with -ref, default: package)
   -ref=XX             The sha1 linked to the build (must be used with -stage)
