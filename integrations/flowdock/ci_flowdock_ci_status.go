@@ -108,12 +108,8 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 
 	activeBuilds := make(map[string]*gitlab.Build, 0)
 
+	// filter builds to only get active ones
 	for _, b := range builds {
-		if levels[b.Status] > level {
-			level = levels[b.Status]
-			status = b.Status
-		}
-
 		if ib, ok := activeBuilds[b.Name]; !ok {
 			activeBuilds[b.Name] = b
 		} else {
@@ -123,6 +119,7 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 		}
 	}
 
+	// found the valid status build
 	for _, b := range activeBuilds {
 		if levels[b.Status] > level {
 			level = levels[b.Status]
@@ -130,6 +127,8 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 		}
 	}
 
+	// if it the last pass with no previous error, we force the final job to be green
+	// the command should be the last one (reporting ...)
 	if c.Last && level == BUILD_RUNNING {
 		status = "success"
 		level = BUILD_SUCCESS
