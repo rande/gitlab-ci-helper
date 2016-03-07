@@ -135,7 +135,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	if len(c.ExtractPath) > 0 {
 		c.Ui.Output(fmt.Sprintf("Extracting package... (%s)", c.ExtractPath))
 
-		err = helper.Unzip(c.ArtifactsFile, "package")
+		err = helper.Unzip(c.ArtifactsFile, c.ExtractPath)
 
 		if err != nil {
 			c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))
