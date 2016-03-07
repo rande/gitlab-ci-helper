@@ -225,7 +225,6 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 	e.Encode(message)
 
 	client := &http.Client{}
-	c.Ui.Info(buf.String())
 
 	r, _ := http.NewRequest("POST", fmt.Sprintf("%s/flows/%s/%s/messages", config.Server, config.Organization, config.Flow), buf)
 	r.Header.Add("Content-Type", "application/json")
