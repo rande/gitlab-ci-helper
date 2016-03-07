@@ -153,7 +153,7 @@ func (c *ProjectBuildArtifactCommand) Synopsis() string {
 
 func (c *ProjectBuildArtifactCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper project:builds:artifacts [options] project build
+Usage: gitlab-ci-helper project:builds:artifacts [options] project build
 
   Download an artifacts and extract it if the 'path' option is provided
 

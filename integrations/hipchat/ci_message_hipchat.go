@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
 
-package commands
+package hipchat
 
 import (
 	"bytes"
@@ -120,7 +120,7 @@ func (c *CiNotificationHipchatCommand) Synopsis() string {
 
 func (c *CiNotificationHipchatCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper ci:notify:hipchat [options] room message
+Usage: gitlab-ci-helper ci:notify:hipchat [options] room message
 
   Send a message to one HipChat's room
 

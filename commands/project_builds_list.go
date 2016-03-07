@@ -100,7 +100,7 @@ func (c *ProjectBuildsListCommand) Synopsis() string {
 
 func (c *ProjectBuildsListCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper project:builds:list [options] project
+Usage: gitlab-ci-helper project:builds:list [options] project
 
   List all builds available for the provide project
 

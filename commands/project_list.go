@@ -59,7 +59,7 @@ func (c *ProjectsListCommand) Synopsis() string {
 
 func (c *ProjectsListCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper project:list [options] project
+Usage: gitlab-ci-helper project:list [options] project
 
   List all projects available
 

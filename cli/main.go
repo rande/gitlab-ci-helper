@@ -9,13 +9,14 @@ import (
 	"github.com/mitchellh/cli"
 	"github.com/rande/gitlab-ci-helper/commands"
 	"github.com/rande/gitlab-ci-helper/integrations/flowdock"
+	"github.com/rande/gitlab-ci-helper/integrations/hipchat"
 	"os"
 )
 
 func main() {
 	ui := &cli.BasicUi{Writer: os.Stdout}
 
-	c := cli.NewCLI("gitlab-helper", "0.0.1-DEV")
+	c := cli.NewCLI("gitlab-ci-helper", "0.0.1-DEV")
 	c.Args = os.Args[1:]
 
 	c.Commands = map[string]cli.CommandFactory{
@@ -45,7 +46,7 @@ func main() {
 			}, nil
 		},
 		"hipchat:message": func() (cli.Command, error) {
-			return &commands.CiNotificationHipchatCommand{
+			return &hipchat.CiNotificationHipchatCommand{
 				Ui: ui,
 			}, nil
 		},

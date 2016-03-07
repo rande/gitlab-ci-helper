@@ -97,7 +97,7 @@ func (c *CiDumpInfoCommand) Synopsis() string {
 
 func (c *CiDumpInfoCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper ci:meta [options]
+Usage: gitlab-ci-helper ci:meta [options]
 
   Dump meta information about ci into a ci.json file
 

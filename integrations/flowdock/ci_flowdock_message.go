@@ -85,7 +85,7 @@ func (c *CiFlowdockMessageCommand) Synopsis() string {
 
 func (c *CiFlowdockMessageCommand) Help() string {
 	helpText := fmt.Sprintf(`
-Usage: gitlab-helper flowdock:message [options] organisation flow message
+Usage: gitlab-ci-helper flowdock:message [options] organisation flow message
 
   Build a flowdock thread from the current build. Information are retrieved from
   environment variables.

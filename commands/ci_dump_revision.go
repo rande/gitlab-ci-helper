@@ -44,7 +44,7 @@ func (c *CiDumpRevisionCommand) Synopsis() string {
 
 func (c *CiDumpRevisionCommand) Help() string {
 	helpText := `
-Usage: gitlab-helper ci:revision [options]
+Usage: gitlab-ci-helper ci:revision [options]
 
   Dump a REVISION file with the current sha1
 

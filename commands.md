@@ -2,7 +2,7 @@
 
 ### ci:meta
 
-    Usage: gitlab-helper ci:meta [options]
+    Usage: gitlab-ci-helper ci:meta [options]
     
       Dump meta information about ci into a ci.json file
     
@@ -12,7 +12,7 @@
 
 ### ci:revision
 
-    Usage: gitlab-helper ci:revision [options]
+    Usage: gitlab-ci-helper ci:revision [options]
     
       Dump a REVISION file with the current sha1
     
@@ -26,7 +26,7 @@
 
 ### flowdock:message
 
-    Usage: gitlab-helper flowdock:message [options] organisation flow message
+    Usage: gitlab-ci-helper flowdock:message [options] organisation flow message
     
       Build a flowdock thread from the current build. Information are retrieved from
       environment variables.
@@ -54,7 +54,7 @@
 
 ### flowdock:status
 
-    Usage: gitlab-helper flowdock:message [options] organisation flow
+    Usage: gitlab-ci-helper flowdock:message [options] organisation flow
     
       Build a flowdock thread from the current build. Information are retrieved from
       environment variables.
@@ -97,7 +97,7 @@
 
 ### hipchat:message
 
-    Usage: gitlab-helper ci:notify:hipchat [options] room message
+    Usage: gitlab-ci-helper ci:notify:hipchat [options] room message
     
       Send a message to one HipChat's room
     
@@ -114,7 +114,7 @@
 
 ### project:builds
 
-    Usage: gitlab-helper project:builds:list [options] project
+    Usage: gitlab-ci-helper project:builds:list [options] project
     
       List all builds available for the provide project
     
@@ -134,7 +134,7 @@
 
 ### project:builds:artifacts
 
-    Usage: gitlab-helper project:builds:artifacts [options] project build
+    Usage: gitlab-ci-helper project:builds:artifacts [options] project build
     
       Download an artifacts and extract it if the 'path' option is provided
     
@@ -156,7 +156,7 @@
 
 ### project:list
 
-    Usage: gitlab-helper project:list [options] project
+    Usage: gitlab-ci-helper project:list [options] project
     
       List all projects available
     
