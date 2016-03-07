@@ -14,7 +14,6 @@ import (
 	gitlab "github.com/plouc/go-gitlab-client"
 	helper "github.com/rande/gitlab-ci-helper"
 	"html/template"
-	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -232,13 +231,13 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 	r, _ := http.NewRequest("POST", fmt.Sprintf("%s/flows/%s/%s/messages", config.Server, config.Organization, config.Flow), buf)
 	r.Header.Add("Content-Type", "application/json")
 
-	resp, _ := client.Do(r)
+	_, err = client.Do(r)
 
-	fmt.Println(resp.Status)
+	if err != nil {
+		c.Ui.Error(fmt.Sprintf("Err: %s", err.Error()))
 
-	io.Copy(os.Stdout, resp.Body)
-
-	resp.Body.Close()
+		return 1
+	}
 
 	return 0
 }

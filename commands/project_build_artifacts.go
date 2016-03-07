@@ -40,7 +40,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	flags.StringVar(&c.ExtractPath, "path", "", "The path to extract the artifacts")
 	flags.StringVar(&c.BuildId, "build", "", "The build number to get the artifacts")
 
-	flags.StringVar(&c.Job, "stage", "job", "The job to search the artifacts")
+	flags.StringVar(&c.Job, "job", "", "The job to search the artifacts")
 	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1) to search the artifacts")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 

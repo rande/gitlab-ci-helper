@@ -11,7 +11,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/mitchellh/cli"
-	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -70,11 +69,13 @@ func (c *CiFlowdockMessageCommand) Run(args []string) int {
 	r, _ := http.NewRequest("POST", fmt.Sprintf("%s/flows/%s/%s/messages", config.Server, config.Organization, config.Flow), buf)
 	r.Header.Add("Content-Type", "application/json")
 
-	resp, _ := client.Do(r)
+	_, err := client.Do(r)
 
-	io.Copy(os.Stdout, resp.Body)
+	if err != nil {
+		c.Ui.Error(fmt.Sprintf("Err: %s", err.Error()))
 
-	resp.Body.Close()
+		return 1
+	}
 
 	return 0
 }
