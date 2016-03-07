@@ -23,7 +23,7 @@ type ProjectBuildArtifactCommand struct {
 	ExtractPath   string
 	ArtifactsFile string
 	BuildId       string
-	Stage         string
+	Job           string
 	Ref           string
 	Project       string
 }
@@ -40,7 +40,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	flags.StringVar(&c.ExtractPath, "path", "", "The path to extract the artifacts")
 	flags.StringVar(&c.BuildId, "build", "", "The build number to get the artifacts")
 
-	flags.StringVar(&c.Stage, "stage", "package", "The stage to search the artifacts")
+	flags.StringVar(&c.Job, "stage", "job", "The job to search the artifacts")
 	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1) to search the artifacts")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 
@@ -92,7 +92,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 		}
 
 		for _, b := range builds {
-			if b.Stage == c.Stage {
+			if b.Name == c.Job {
 				build = b
 				break
 			}
@@ -163,7 +163,7 @@ Options:
 
   -project=XX         The project reference (default: CI_PROJECT_ID)
   -build=XX           The build number used to retrieved the related artifact
-  -stage=XX           The stage to search the build (must be used with -ref, default: package)
+  -job=XX             The job to search the build (must be used with -ref, default: package)
   -ref=XX             The sha1 linked to the build (must be used with -stage, default: CI_BUILD_REF)
   -file=artifacts.zip The path to the artifact file (default: artifacts.zip)
   -path=./package     The path to extract the command. If not set, the artifact will not

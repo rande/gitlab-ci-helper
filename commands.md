@@ -142,7 +142,7 @@
     
       -project=XX         The project reference (default: CI_PROJECT_ID)
       -build=XX           The build number used to retrieved the related artifact
-      -stage=XX           The stage to search the build (must be used with -ref, default: package)
+      -job=XX             The job to search the build (must be used with -ref, default: package)
       -ref=XX             The sha1 linked to the build (must be used with -stage, default: CI_BUILD_REF)
       -file=artifacts.zip The path to the artifact file (default: artifacts.zip)
       -path=./package     The path to extract the command. If not set, the artifact will not
