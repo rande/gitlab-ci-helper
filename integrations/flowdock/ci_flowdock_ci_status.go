@@ -199,7 +199,7 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 
 	message := &FlowdockMessage{
 		Event:      "activity",
-		ExternalId: fmt.Sprintf("gitlab:%s", c.BuildRef),
+		ExternalId: fmt.Sprintf("gitlab:%s:%s", c.BuildRef, c.BuildRefName),
 		Title:      fmt.Sprintf("Update status, job:%s", c.BuildName),
 		Thread: &FlowdockThread{
 			Status: &FlowdockThreadStatus{
