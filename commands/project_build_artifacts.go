@@ -142,6 +142,9 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 
 			return 1
 		}
+
+		// delete artifacts.zip
+		os.Remove(c.ArtifactsFile);
 	}
 
 	c.Ui.Output(fmt.Sprintf("Done!"))
