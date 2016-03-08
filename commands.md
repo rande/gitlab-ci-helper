@@ -170,3 +170,13 @@
       GITLAB_HOST         The gitlab host
       GITLAB_TOKEN        The user's token
       GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
+
+### version
+
+    Usage: gitlab-ci-helper version
+    
+      Display the version number
+    
+    Options:
+    
+      -e                  Extended version with sha1

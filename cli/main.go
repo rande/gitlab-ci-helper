@@ -13,6 +13,11 @@ import (
 	"os"
 )
 
+var (
+	Version = "0.0.1-Dev"
+	RefLog  = "master"
+)
+
 func main() {
 	ui := &cli.BasicUi{Writer: os.Stdout}
 
@@ -64,6 +69,13 @@ func main() {
 			return &commands.DumpReadmeCommand{
 				Ui:       ui,
 				Commands: c.Commands,
+			}, nil
+		},
+		"version": func() (cli.Command, error) {
+			return &commands.VersionCommand{
+				Ui:      ui,
+				Version: Version,
+				RefLog:  RefLog,
 			}, nil
 		},
 	}
