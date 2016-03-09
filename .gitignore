@@ -24,5 +24,4 @@ _testmain.go
 *.prof
 
 package
-artifacts.zip
 build

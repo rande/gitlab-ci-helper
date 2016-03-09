@@ -95,5 +95,8 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 		expected := "Found project: Diaspora/Diaspora Project Site (id: 3)\nFound build - stage:test status:canceled id:69\nDownloading artifacts... (artifacts.zip)\nDone!\n"
 		assert.Equal(t, expected, ui.OutputWriter.String())
 		assert.Equal(t, "", ui.ErrorWriter.String())
+
+		os.Remove(c.ArtifactsFile)
 	})
+	
 }
