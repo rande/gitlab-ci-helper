@@ -98,5 +98,5 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 
 		os.Remove(c.ArtifactsFile)
 	})
-	
+
 }
