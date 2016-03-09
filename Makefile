@@ -32,10 +32,10 @@ test: ## run tests and cs tools
 
 build: ## build binaries
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.RefLog=$(SHA1)" -o build/darwin/amd64/gitlab-ci-helper cli/main.go
-	GOOS=linux  GOARCH=amd64 go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/amd64/gitlab-ci-helper cli/main.go
-	GOOS=linux  GOARCH=386   go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/386/gitlab-ci-helper cli/main.go
-	GOOS=linux  GOARCH=arm   go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/arm/gitlab-ci-helper cli/main.go
-	GOOS=linux  GOARCH=arm64 go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/arm64/gitlab-ci-helper cli/main.go
+	GOOS=linux  GOARCH=amd64 go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/amd64/gitlab-ci-helper  cli/main.go
+	GOOS=linux  GOARCH=386   go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/386/gitlab-ci-helper    cli/main.go
+	GOOS=linux  GOARCH=arm   go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/arm/gitlab-ci-helper    cli/main.go
+	GOOS=linux  GOARCH=arm64 go build -ldflags "-X main.RefLog=$(SHA1)" -o build/linux/arm64/gitlab-ci-helper  cli/main.go
 	build/linux/amd64/gitlab-ci-helper version -e
 
 release: build ## build and release binaries on github
