@@ -40,12 +40,13 @@ type Meta struct {
 	Server  *MetaServer  `json:"server"`
 }
 
-type CiDumpInfoCommand struct {
-	Ui      cli.Ui
-	Verbose bool
+type CiDumpMetaCommand struct {
+	Ui       cli.Ui
+	Verbose  bool
+	MetaFile string
 }
 
-func (c *CiDumpInfoCommand) Run(args []string) int {
+func (c *CiDumpMetaCommand) Run(args []string) int {
 
 	cmdFlags := flag.NewFlagSet("ci:meta", flag.ContinueOnError)
 	cmdFlags.Usage = func() {
@@ -53,6 +54,7 @@ func (c *CiDumpInfoCommand) Run(args []string) int {
 	}
 
 	cmdFlags.BoolVar(&c.Verbose, "verbose", false, "")
+	cmdFlags.StringVar(&c.MetaFile, "file", "ci.json", "")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1
@@ -78,7 +80,7 @@ func (c *CiDumpInfoCommand) Run(args []string) int {
 		},
 	}
 
-	fp, _ := os.Create("ci.json")
+	fp, _ := os.Create(c.MetaFile)
 	defer fp.Close()
 
 	b, _ := json.Marshal(meta)
@@ -91,11 +93,11 @@ func (c *CiDumpInfoCommand) Run(args []string) int {
 	return 0
 }
 
-func (c *CiDumpInfoCommand) Synopsis() string {
+func (c *CiDumpMetaCommand) Synopsis() string {
 	return "Dump a json file with build information."
 }
 
-func (c *CiDumpInfoCommand) Help() string {
+func (c *CiDumpMetaCommand) Help() string {
 	helpText := `
 Usage: gitlab-ci-helper ci:meta [options]
 
@@ -103,6 +105,7 @@ Usage: gitlab-ci-helper ci:meta [options]
 
 Options:
 
+  -file               Target file (default: ci.json)
   -verbose            Add verbose information to the output
 `
 	return strings.TrimSpace(helpText)

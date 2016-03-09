@@ -8,6 +8,7 @@
     
     Options:
     
+      -file               Target file (default: ci.json)
       -verbose            Add verbose information to the output
 
 ### ci:revision
@@ -17,7 +18,8 @@
       Dump a REVISION file with the current sha1
     
     Options:
-    
+      -file               Target file (default: REVISION)
+      -ref                The sha1 (default: env var CI_BUILD_REF)
       -verbose            Add verbose information to the output
     
     Env Variables:

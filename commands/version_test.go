@@ -6,9 +6,9 @@
 package commands
 
 import (
-	"testing"
 	"github.com/mitchellh/cli"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func Test_Version(t *testing.T) {
@@ -24,13 +24,12 @@ func Test_Version(t *testing.T) {
 func Test_Version_Extended(t *testing.T) {
 	ui := &cli.MockUi{}
 	c := &VersionCommand{
-		Ui: ui,
-		RefLog: "sha1",
+		Ui:      ui,
+		RefLog:  "sha1",
 		Version: "1.0.0-TEST",
 	}
 
 	code := c.Run([]string{"-e"})
-
 
 	assert.Equal(t, "1.0.0-TEST - sha1\n", ui.OutputWriter.String())
 	assert.Equal(t, 0, code)

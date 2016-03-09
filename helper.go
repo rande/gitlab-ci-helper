@@ -7,14 +7,18 @@ package gitlab_ci_helper
 
 import (
 	"archive/zip"
+	"bytes"
 	"errors"
 	"fmt"
 	gitlab "github.com/plouc/go-gitlab-client"
 	"io"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"testing"
 )
 
 func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {
@@ -84,6 +88,7 @@ func Unzip(archive, target string) error {
 
 	for _, file := range reader.File {
 		path := filepath.Join(target, file.Name)
+
 		if file.FileInfo().IsDir() {
 			os.MkdirAll(path, file.Mode())
 			continue
@@ -130,4 +135,66 @@ func GetEnv(name, deflt string) string {
 	}
 
 	return os.Getenv(name)
+}
+
+type FakeRequest struct {
+	Host   string
+	Path   string
+	Method string
+	Called int
+
+	Response *http.Response
+}
+
+func WrapperTestCommand(reqs []*FakeRequest, envs map[string]string, t *testing.T, fn func(ts *httptest.Server)) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Printf("Handling a request: %s\n", r.URL.Path)
+		// dummy matcher
+		for _, req := range reqs {
+			if req.Path == r.URL.Path && req.Method == r.Method {
+				fmt.Printf("Found request: %s\n", req.Path)
+
+				req.Called++
+
+				for name, values := range req.Response.Header {
+					for _, v := range values {
+						w.Header().Add(name, v)
+					}
+				}
+
+				buf := bytes.NewBuffer([]byte(""))
+
+				io.Copy(buf, req.Response.Body)
+
+				//bytes.NewBuffer(buf.Bytes()).WriteTo(os.Stdout)
+				bytes.NewBuffer(buf.Bytes()).WriteTo(w)
+
+				req.Response.Body.Close()
+
+				return
+			}
+		}
+
+		t.Error("Unable to find a response to handle the request")
+	}))
+
+	envs["GITLAB_HOST"] = ts.URL
+
+	defer func() {
+		ts.Close()
+
+		for name := range envs {
+			os.Unsetenv(name)
+		}
+	}()
+
+	for name, value := range envs {
+		err := os.Setenv(name, value)
+
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	fn(ts)
 }

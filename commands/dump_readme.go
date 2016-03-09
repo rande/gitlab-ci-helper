@@ -19,7 +19,6 @@ type DumpReadmeCommand struct {
 }
 
 func (c *DumpReadmeCommand) Run(args []string) int {
-
 	mk := make([]string, len(c.Commands))
 
 	i := 0

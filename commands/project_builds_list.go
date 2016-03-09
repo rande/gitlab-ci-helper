@@ -65,7 +65,6 @@ func (c *ProjectBuildsListCommand) Run(args []string) int {
 	builds, err := client.ProjectBuilds(strconv.FormatInt(int64(project.Id), 10))
 
 	if err != nil {
-
 		flags.Usage()
 
 		c.Ui.Error(fmt.Sprintf("\nError: %s", err.Error()))

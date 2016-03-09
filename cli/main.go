@@ -41,7 +41,7 @@ func main() {
 			}, nil
 		},
 		"ci:meta": func() (cli.Command, error) {
-			return &commands.CiDumpInfoCommand{
+			return &commands.CiDumpMetaCommand{
 				Ui: ui,
 			}, nil
 		},

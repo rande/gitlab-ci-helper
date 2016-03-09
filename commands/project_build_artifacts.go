@@ -92,6 +92,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 		}
 
 		for _, b := range builds {
+			fmt.Printf("\nname: %s, job: %s\n", b.Name, c.Job)
 			if b.Name == c.Job {
 				build = b
 				break
@@ -124,7 +125,13 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	}
 
 	c.Ui.Output(fmt.Sprintf("Downloading artifacts... (%s)", fp.Name()))
-	_, err = io.Copy(fp, r)
+	written, err := io.Copy(fp, r)
+
+	if written == 0 {
+		c.Ui.Error(fmt.Sprintf("Error: %s", "No byte downloaded"))
+
+		return 1
+	}
 
 	if err != nil {
 		c.Ui.Error(fmt.Sprintf("Error: %s", err.Error()))

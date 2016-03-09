@@ -13,8 +13,10 @@ import (
 )
 
 type CiDumpRevisionCommand struct {
-	Ui      cli.Ui
-	Verbose bool
+	Ui           cli.Ui
+	Verbose      bool
+	RevisionFile string
+	Reference    string
 }
 
 func (c *CiDumpRevisionCommand) Run(args []string) int {
@@ -25,15 +27,17 @@ func (c *CiDumpRevisionCommand) Run(args []string) int {
 	}
 
 	cmdFlags.BoolVar(&c.Verbose, "verbose", false, "")
+	cmdFlags.StringVar(&c.RevisionFile, "file", "REVISION", "The revision file")
+	cmdFlags.StringVar(&c.Reference, "ref", os.Getenv("CI_BUILD_REF"), "The sha1 (default: env var CI_BUILD_REF)")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1
 	}
 
-	fp, _ := os.Create("REVISION")
+	fp, _ := os.Create(c.RevisionFile)
 	defer fp.Close()
 
-	fp.Write([]byte(os.Getenv("CI_BUILD_REF")))
+	fp.Write([]byte(c.Reference))
 
 	return 0
 }
@@ -49,7 +53,8 @@ Usage: gitlab-ci-helper ci:revision [options]
   Dump a REVISION file with the current sha1
 
 Options:
-
+  -file               Target file (default: REVISION)
+  -ref                The sha1 (default: env var CI_BUILD_REF)
   -verbose            Add verbose information to the output
 
 Env Variables:
