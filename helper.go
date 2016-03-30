@@ -6,7 +6,6 @@
 package gitlab_ci_helper
 
 import (
-	"archive/zip"
 	"bytes"
 	"errors"
 	"fmt"
@@ -15,11 +14,22 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"testing"
 )
+
+type Paths []string
+
+func (p *Paths) String() string {
+	return fmt.Sprintf("%v", *p)
+}
+
+func (p *Paths) Set(value string) error {
+	*p = append(*p, value)
+
+	return nil
+}
 
 func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {
 	pId, err := strconv.ParseInt(p, 10, 32)
@@ -73,60 +83,6 @@ func GetBuild(project *gitlab.Project, buildId string, client *gitlab.Gitlab) (*
 	}
 
 	return build, err
-}
-
-// from http://blog.ralch.com/tutorial/golang-working-with-zip/
-func Unzip(archive, target string) error {
-	reader, err := zip.OpenReader(archive)
-	if err != nil {
-		return err
-	}
-
-	if err := os.MkdirAll(target, 0755); err != nil {
-		return err
-	}
-
-	for _, file := range reader.File {
-		path := filepath.Join(target, file.Name)
-
-		if file.FileInfo().IsDir() {
-			os.MkdirAll(path, file.Mode())
-			continue
-		}
-
-		fileReader, err := file.Open()
-		if err != nil {
-
-			if fileReader != nil {
-				fileReader.Close()
-			}
-
-			return err
-		}
-
-		targetFile, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, file.Mode())
-		if err != nil {
-			fileReader.Close()
-
-			if targetFile != nil {
-				targetFile.Close()
-			}
-
-			return err
-		}
-
-		if _, err := io.Copy(targetFile, fileReader); err != nil {
-			fileReader.Close()
-			targetFile.Close()
-
-			return err
-		}
-
-		fileReader.Close()
-		targetFile.Close()
-	}
-
-	return nil
 }
 
 func GetEnv(name, deflt string) string {
