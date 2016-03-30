@@ -78,6 +78,16 @@ func main() {
 				RefLog:  RefLog,
 			}, nil
 		},
+		"s3:archive": func() (cli.Command, error) {
+			return &commands.S3ArchiveCommand{
+				Ui: ui,
+			}, nil
+		},
+		"s3:extract": func() (cli.Command, error) {
+			return &commands.S3ExtractCommand{
+				Ui: ui,
+			}, nil
+		},
 	}
 
 	exitStatus, _ := c.Run()

@@ -173,6 +173,55 @@
       GITLAB_TOKEN        The user's token
       GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
 
+### s3:archive
+
+    Usage: gitlab-ci-helper s3:archive
+    
+      Send archive to a S3 bucket
+    
+    Options:
+    
+      -include            Path to include (one option per path)
+      -exclude            Path to exclude (one option per path)
+      -ignore-cvs         Exclude CVS files: .git .svn .bzr .hg
+      -verbose            Add verbose information to the output
+      -job                The job name (default: CI_BUILD_NAME)
+      -ref                The reference (sha1) (default: CI_BUILD_REF)
+      -project            The project reference (default: CI_PROJECT_ID)
+      -region             The s3 region (default: AWS_REGION)
+      -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
+      -profile            The aws credentials name (default: AWS_PROFILE, if not set default)
+      -bucket             The s3 bucket name (default: AWS_BUCKET)
+    
+    Credentials are retrieved from environment:
+    
+      GITLAB_HOST         The gitlab host
+      GITLAB_TOKEN        The user's token
+      GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
+
+### s3:extract
+
+    Usage: gitlab-ci-helper s3:extract
+    
+      Extract archive from a S3 bucket
+    
+    Options:
+    
+      -verbose            Add verbose information to the output
+      -job                The job name (default: CI_BUILD_NAME)
+      -ref                The reference (sha1) (default: CI_BUILD_REF)
+      -project            The project reference (default: CI_PROJECT_ID)
+      -region             The s3 region (default: AWS_REGION)
+      -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
+      -profile            The aws credentials name (default: AWS_PROFILE, if not set default)
+      -bucket             The s3 bucket name (default: AWS_BUCKET)
+    
+    Credentials are retrieved from environment:
+    
+      GITLAB_HOST         The gitlab host
+      GITLAB_TOKEN        The user's token
+      GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
+
 ### version
 
     Usage: gitlab-ci-helper version
