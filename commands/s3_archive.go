@@ -19,6 +19,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"time"
 )
 
 type S3ArchiveCommand struct {
@@ -133,14 +134,27 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 		ContentType: aws.String("application/zip"),
 	}
 
-	c.Ui.Output(fmt.Sprintf("Copy zip file: s3://%s/%s", c.AwsBucket, key))
+	count := 0
+	for {
+		count++
 
-	_, err = s3client.PutObject(putObject)
+		c.Ui.Output(fmt.Sprintf("Copy zip file: s3://%s/%s (%d)", c.AwsBucket, key, count))
 
-	if err != nil {
-		c.Ui.Output(fmt.Sprintf("Unable to copy zip file: %s, %s", zipTarget, err))
+		_, err = s3client.PutObject(putObject)
 
-		return 1
+		if err != nil {
+			c.Ui.Output(fmt.Sprintf("Unable to copy zip file: %s, %s", zipTarget, err))
+
+			if count > 5 {
+				return 1
+			}
+
+			c.Ui.Output(fmt.Sprintf("Retry to copy file: %s", zipTarget))
+
+			time.Sleep(2 * time.Second)
+		}
+
+		break
 	}
 
 	os.Remove(zipTarget)
