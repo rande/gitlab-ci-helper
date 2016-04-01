@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -30,6 +31,8 @@ func (p *Paths) Set(value string) error {
 
 	return nil
 }
+
+var SemVersion = regexp.MustCompile("(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)")
 
 func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {
 	pId, err := strconv.ParseInt(p, 10, 32)

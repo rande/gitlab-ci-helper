@@ -20,6 +20,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"io"
+	"regexp"
 )
 
 type S3ExtractCommand struct {
@@ -29,6 +30,7 @@ type S3ExtractCommand struct {
 	Job         string
 	Project     string
 	ExtractPath string
+	TagMatcher  string
 
 	// s3 settings
 	AwsRegion   string
@@ -50,6 +52,7 @@ func (c *S3ExtractCommand) Run(args []string) int {
 	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1)")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 	flags.StringVar(&c.ExtractPath, "path", "./", "The project reference")
+	flags.StringVar(&c.TagMatcher, "tag-matcher", "(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)", "Regular expression to match tag (default: semver format)")
 
 	flags.StringVar(&c.AwsRegion, "region", os.Getenv("AWS_REGION"), "The s3 region")
 	flags.StringVar(&c.AwsEndPoint, "endpoint", os.Getenv("AWS_ENDPOINT"), "The s3 endpoint")
@@ -97,7 +100,12 @@ func (c *S3ExtractCommand) Run(args []string) int {
 
 	s3client := s3.New(session.New(), awsConfig)
 
-	key := fmt.Sprintf("%s/%s/%s/%s_%s.zip", "commits", project.Namespace.Path, project.Path, c.Ref, c.Job)
+	section := "commits"
+	if regexp.MustCompile(c.TagMatcher).Match([]byte(c.Ref)) {
+		section = "releases"
+	}
+
+	key := fmt.Sprintf("%s/%s/%s/%s_%s.zip", section, project.Namespace.Path, project.Path, c.Ref, c.Job)
 
 	zipTarget := fmt.Sprintf("%s/%s_%s.zip", os.TempDir(), c.Ref, c.Job)
 
@@ -156,6 +164,7 @@ Options:
   -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
   -profile            The aws credentials name (default: AWS_PROFILE, if not set default)
   -bucket             The s3 bucket name (default: AWS_BUCKET)
+  -tag-matcher        The regular expression to match a tag (default: semver)
 
 Credentials are retrieved from environment:
 

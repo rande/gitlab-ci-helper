@@ -17,8 +17,6 @@ func Test_Zip_No_Error(t *testing.T) {
 
 	targetPath := fmt.Sprintf("%s/test_zip.zip", os.TempDir())
 
-	fmt.Print(targetPath)
-
 	includePath := make(Paths, 0)
 	includePath.Set("./README.md")
 

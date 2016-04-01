@@ -192,6 +192,7 @@
       -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
       -profile            The aws credentials name (default: AWS_PROFILE, if not set default)
       -bucket             The s3 bucket name (default: AWS_BUCKET)
+      -tag-matcher        The regular expression to match a tag (default: semver)
     
     Credentials are retrieved from environment:
     
@@ -215,6 +216,7 @@
       -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
       -profile            The aws credentials name (default: AWS_PROFILE, if not set default)
       -bucket             The s3 bucket name (default: AWS_BUCKET)
+      -tag-matcher        The regular expression to match a tag (default: semver)
     
     Credentials are retrieved from environment:
     
