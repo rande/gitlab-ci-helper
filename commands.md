@@ -187,6 +187,7 @@
       -verbose            Add verbose information to the output
       -job                The job name (default: CI_BUILD_NAME)
       -ref                The reference (sha1) (default: CI_BUILD_REF)
+      -ref-name           The reference name (default: CI_BUILD_REF_NAME)
       -project            The project reference (default: CI_PROJECT_ID)
       -region             The s3 region (default: AWS_REGION)
       -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
@@ -211,6 +212,7 @@
       -verbose            Add verbose information to the output
       -job                The job name (default: CI_BUILD_NAME)
       -ref                The reference (sha1) (default: CI_BUILD_REF)
+      -ref-name           The reference name (default: CI_BUILD_REF_NAME)
       -project            The project reference (default: CI_PROJECT_ID)
       -region             The s3 region (default: AWS_REGION)
       -endpoint           The s3 endpoint (default: AWS_ENDPOINT)

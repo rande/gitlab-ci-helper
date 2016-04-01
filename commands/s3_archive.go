@@ -27,6 +27,7 @@ type S3ArchiveCommand struct {
 	Ui           cli.Ui
 	Verbose      bool
 	Ref          string
+	RefName      string
 	Job          string
 	Project      string
 	IncludePaths helper.Paths
@@ -51,6 +52,7 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 	flags.BoolVar(&c.Verbose, "verbose", false, "")
 	flags.StringVar(&c.Job, "job", os.Getenv("CI_BUILD_NAME"), "The job name")
 	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1)")
+	flags.StringVar(&c.RefName, "ref-name", os.Getenv("CI_BUILD_REF_NAME"), "The reference name (tag or branch)")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 	flags.StringVar(&c.TagMatcher, "tag-matcher", "(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)", "Regular expression to match tag (default: semver format)")
 
@@ -125,12 +127,11 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 
 	s3client := s3.New(session.New(), awsConfig)
 
-	section := "commits"
-	if regexp.MustCompile(c.TagMatcher).Match([]byte(c.Ref)) {
-		section = "releases"
-	}
+	key := fmt.Sprintf("commits/%s/%s/%s_%s.zip", project.Namespace.Path, project.Path, c.Ref, c.Job)
 
-	key := fmt.Sprintf("%s/%s/%s/%s_%s.zip", section, project.Namespace.Path, project.Path, c.Ref, c.Job)
+	if regexp.MustCompile(c.TagMatcher).Match([]byte(c.RefName)) {
+		key = fmt.Sprintf("releases/%s/%s/%s_%s.zip", project.Namespace.Path, project.Path, c.RefName, c.Job)
+	}
 
 	f, _ := os.Open(zipTarget)
 	defer f.Close()
@@ -190,6 +191,7 @@ Options:
   -verbose            Add verbose information to the output
   -job                The job name (default: CI_BUILD_NAME)
   -ref                The reference (sha1) (default: CI_BUILD_REF)
+  -ref-name           The reference name (default: CI_BUILD_REF_NAME)
   -project            The project reference (default: CI_PROJECT_ID)
   -region             The s3 region (default: AWS_REGION)
   -endpoint           The s3 endpoint (default: AWS_ENDPOINT)
