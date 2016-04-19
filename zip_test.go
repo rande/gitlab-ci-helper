@@ -13,16 +13,11 @@ import (
 	"testing"
 )
 
-func DeleteTestFile(path string) {
-
-}
-
 func Test_Zip_No_Error(t *testing.T) {
-
 	targetPath := fmt.Sprintf("%s/gitlab_ci_helper_zip.zip", os.TempDir())
 
 	includePath := make(Paths, 0)
-	includePath.Set("./README.md")
+	includePath.Set("README.md")
 
 	excludePath := make(Paths, 0)
 	excludePath.Set(".git")
@@ -49,11 +44,10 @@ func Test_Zip_No_Error(t *testing.T) {
 func Test_Zip_File_Mode(t *testing.T) {
 
 	targetPath := fmt.Sprintf("%s/gitlab_ci_helper_zip.zip", os.TempDir())
-	binPath := fmt.Sprintf("%s/gitlab_ci_helper_zip.bin", os.TempDir())
+	binPath := "gitlab_ci_helper_zip.bin"
 
-	if _, err := os.Stat(binPath); err != nil {
-		os.Remove(binPath)
-	}
+	os.Remove(binPath)
+	os.Remove(fmt.Sprintf("%s/%s", os.TempDir(), binPath))
 
 	f, err := os.OpenFile(binPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, os.FileMode(0755))
 
@@ -88,12 +82,13 @@ func Test_Zip_File_Mode(t *testing.T) {
 	err = Unzip(targetPath, os.TempDir())
 	assert.NoError(t, err)
 
-	if f, err := os.Stat(binPath); err == nil {
+	if f, err := os.Stat(fmt.Sprintf("%s/%s", os.TempDir(), binPath)); err == nil {
 		assert.Equal(t, os.FileMode(0755), f.Mode().Perm())
 	} else {
-		assert.False(t, true, fmt.Sprintf("Error, no file extracted: %s", err))
+		assert.NoError(t, err, fmt.Sprintf("Error, no file extracted: %s", err))
 	}
 
+	os.Remove(fmt.Sprintf("%s/%s", os.TempDir(), binPath))
 	os.Remove(binPath)
 	os.Remove(targetPath)
 }
