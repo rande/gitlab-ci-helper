@@ -6,6 +6,7 @@
 package gitlab_ci_helper
 
 import (
+	"errors"
 	"github.com/rande/garchive"
 	"os"
 	"path/filepath"
@@ -33,7 +34,7 @@ func Zip(includePaths, excludePaths Paths, target string) error {
 
 		var baseDir string
 		if info.IsDir() {
-			baseDir = filepath.Base(source)
+			baseDir = source
 		}
 
 		filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
@@ -55,6 +56,10 @@ func Zip(includePaths, excludePaths Paths, target string) error {
 
 			return err
 		})
+	}
+
+	if len(files) == 0 {
+		return errors.New("No file to zip")
 	}
 
 	return garchive.CreateZipFile(target, files)

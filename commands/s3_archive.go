@@ -99,7 +99,11 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 
 	c.Ui.Output(fmt.Sprintf("Generate zip file: %s", zipTarget))
 
-	helper.Zip(c.IncludePaths, c.IgnorePaths, zipTarget)
+	if err := helper.Zip(c.IncludePaths, c.IgnorePaths, zipTarget); err != nil {
+		c.Ui.Output(fmt.Sprintf("Unable to zip file: %s", err))
+
+		return 1
+	}
 
 	chainProvider := credentials.NewChainCredentials([]credentials.Provider{
 		&credentials.EnvProvider{},
