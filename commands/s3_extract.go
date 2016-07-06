@@ -122,6 +122,12 @@ func (c *S3ExtractCommand) Run(args []string) int {
 
 	objOutput, err := s3client.GetObject(putObject)
 
+	if err != nil {
+		c.Ui.Output(fmt.Sprintf("Unable to download archive from s3://%s/%s, %s", c.AwsBucket, key, err))
+
+		return 1
+	}
+
 	_, err = io.Copy(f, objOutput.Body)
 
 	if err != nil {
