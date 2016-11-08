@@ -114,6 +114,25 @@
       -server             The hipchat server, default to env var HIPCHAT_SERVER, then https://api.hipchat.com
       -verbose            Add verbose information to the output
 
+### jenkins:start
+
+    Usage: gitlab-ci-helper jenkins:start [options]
+    
+      Download an artifacts and extract it if the 'path' option is provided
+    
+    Options:
+    
+      -job=XX               The Jenkins job to start
+      -job-token=XX         The job token to use to call the API (default: JENKINS_JOB_TOKEN)
+      -parameter=name:value Add a parameter to the job
+      -verbose              Add verbose information to the output
+    
+    Credentials are retrieved from environment:
+    
+      JENKINS_HOST      The jenkins host
+      JENKINS_USER      The username to login with
+      JENKINS_API_TOKEN The API Token associated with this user
+
 ### project:builds
 
     Usage: gitlab-ci-helper project:builds:list [options] project

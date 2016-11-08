@@ -32,6 +32,18 @@ func (p *Paths) Set(value string) error {
 	return nil
 }
 
+type Parameters []string
+
+func (p *Parameters) String() string {
+	return fmt.Sprintf("%v", *p)
+}
+
+func (p *Parameters) Set(value string) error {
+	*p = append(*p, value)
+
+	return nil
+}
+
 var SemVersion = regexp.MustCompile("(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)")
 
 func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {

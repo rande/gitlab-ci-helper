@@ -55,6 +55,11 @@ func main() {
 				Ui: ui,
 			}, nil
 		},
+		"jenkins:start": func() (cli.Command, error) {
+			return &commands.JenkinsStartJobCommand{
+				Ui: ui,
+			}, nil
+		},
 		"flowdock:message": func() (cli.Command, error) {
 			return &flowdock.CiFlowdockMessageCommand{
 				Ui: ui,
