@@ -1,7 +1,8 @@
 # gitlab-ci-helper
 
-This tool provides a binary cli to execute common commands inside a gitlab's job.
+[![Coverage Status](https://coveralls.io/repos/github/rande/gitlab-ci-helper/badge.svg?branch=master)](https://coveralls.io/github/rande/gitlab-ci-helper?branch=master)
 
+This tool provides a binary cli to execute common commands inside a gitlab's job.
 
 ## Commands 
 
