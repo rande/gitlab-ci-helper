@@ -6,6 +6,7 @@
 package commands
 
 import (
+	"flag"
 	"fmt"
 	"github.com/mitchellh/cli"
 	"sort"
@@ -19,6 +20,18 @@ type DumpReadmeCommand struct {
 }
 
 func (c *DumpReadmeCommand) Run(args []string) int {
+
+	cmdFlags := flag.NewFlagSet("dump:readme", flag.ContinueOnError)
+	cmdFlags.Usage = func() {
+		c.Ui.Output(c.Help())
+	}
+
+	cmdFlags.BoolVar(&c.Verbose, "verbose", false, "")
+
+	if err := cmdFlags.Parse(args); err != nil {
+		return 1
+	}
+
 	mk := make([]string, len(c.Commands))
 
 	i := 0
@@ -54,5 +67,5 @@ func (c *DumpReadmeCommand) Synopsis() string {
 }
 
 func (c *DumpReadmeCommand) Help() string {
-	return strings.TrimSpace("")
+	return strings.TrimSpace("Dump the command readme.")
 }

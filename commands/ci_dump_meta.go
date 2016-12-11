@@ -47,7 +47,6 @@ type CiDumpMetaCommand struct {
 }
 
 func (c *CiDumpMetaCommand) Run(args []string) int {
-
 	cmdFlags := flag.NewFlagSet("ci:meta", flag.ContinueOnError)
 	cmdFlags.Usage = func() {
 		c.Ui.Output(c.Help())

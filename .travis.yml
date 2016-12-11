@@ -1,11 +1,27 @@
 language: go
 
+go: [1.6]
+
 sudo: false
 
-go:
-  - 1.6
-
 script:
+  - go get github.com/mattn/goveralls
   - make install
-  - make test
-  - make release
+  - make coverage-backend
+  - goveralls -coverprofile=build/gitlabcihelper.coverage -service=travis-ci
+  - make build
+
+deploy:
+    provider: releases
+    api_key:
+        secure: "uSFkzhrjswPhCfpqJxO4RshpkeM/+pJ0E2liyLQ8aUTbthih7y08BK/5fkDJ1J08jkMOmBzR8qzf1l7eiGpVhRdEerUh1mgraVyK6U/OvHDXVtcatx67vyyf6MjLxkoV3DCnbcwgoYyFSwQFHrExA8qZlOB07G0G38KbJThIxMk2YoWteJ7IwSS2vUnnlmSxn/nvfhm8pS0dy2TOrreOONLZiv6B0Bq55eB1c78j+7BjCHR/8AkBiEZ5nHYxeXgl/P1VV+iBkBZlPBr/hpIMD8gastqOTo48AZWAzeDpwMYTjau33KVeUjQcSm2HaNxt70iYaWSy5/6D+di6AksfuzhiYFOBwOLn/DBM2AeMciFq41FeZrzhug6BVVZa+5HnLTB+G79kuI8s3J7LKObJYLt/jBw0e1pvkU8MdEtY7hA4VtVN9ENzWc6yoV8G8W59y5fiN7G2lqIyCiyHA6Fcbf5MQUF2oOYI0mUL9eF05p11V8Mh1j4U3nfwV58jSyl63t5eq2Y3ckdTiIoOVuFSiAEHVFWvch6YWmZkrplK5yzCmq2SORhhB5nmuwl9onV2KiMniIIlNLzTL5mAXb5Sv5r7O5i68eOJQO/+Gnd4G7wt6poE9laQwQdDCaGvP2JpTkxkqjvhIgCtADMzHY31IINxtKDn1zZUpBIGfKFNOZU="
+    file:
+        - build/darwin-amd64-pkgmirror
+        - build/linux-amd64-pkgmirror
+        - build/linux-386-pkgmirror
+        - build/linux-arm-pkgmirror
+        - build/linux-arm64-pkgmirror
+    skip_cleanup: true
+    overwrite: true
+    on:
+        tags: true

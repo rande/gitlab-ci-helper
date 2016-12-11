@@ -100,3 +100,20 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 	})
 
 }
+
+func Test_Project_Builds_Artifacts_Help(t *testing.T) {
+	c := &ProjectBuildArtifactCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.True(t, len(c.Help()) > 0)
+	assert.True(t, len(c.Synopsis()) > 0)
+}
+
+func Test_Project_Builds_Artifacts_InvalidRun(t *testing.T) {
+	c := &ProjectBuildArtifactCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.Equal(t, 1, c.Run([]string{"--foobar"}))
+}
