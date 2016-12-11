@@ -3,7 +3,7 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
 
-package commands
+package flowdock
 
 import (
 	"github.com/mitchellh/cli"
@@ -11,19 +11,8 @@ import (
 	"testing"
 )
 
-func Test_Dump_Readme(t *testing.T) {
-	ui := &cli.MockUi{}
-	c := &DumpReadmeCommand{
-		Ui: ui,
-	}
-
-	code := c.Run(nil)
-
-	assert.Equal(t, 0, code)
-}
-
-func Test_Dump_Readme_Help(t *testing.T) {
-	c := &DumpReadmeCommand{
+func Test_CiFlowdockMessageCommand_Help(t *testing.T) {
+	c := &CiFlowdockMessageCommand{
 		Ui: &cli.MockUi{},
 	}
 
@@ -31,8 +20,8 @@ func Test_Dump_Readme_Help(t *testing.T) {
 	assert.True(t, len(c.Synopsis()) > 0)
 }
 
-func Test_Dump_Readme_InvalidRun(t *testing.T) {
-	c := &DumpReadmeCommand{
+func Test_CiFlowdockMessageCommand_InvalidRun(t *testing.T) {
+	c := &CiFlowdockMessageCommand{
 		Ui: &cli.MockUi{},
 	}
 

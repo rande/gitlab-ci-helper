@@ -98,3 +98,20 @@ func Test_Ci_Dump_Meta_With_Values(t *testing.T) {
 
 	os.Remove(path)
 }
+
+func Test_Ci_Dump_Meta_Help(t *testing.T) {
+	c := &CiDumpMetaCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.True(t, len(c.Help()) > 0)
+	assert.True(t, len(c.Synopsis()) > 0)
+}
+
+func Test_Ci_Dump_Meta_InvalidRun(t *testing.T) {
+	c := &CiDumpMetaCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.Equal(t, 1, c.Run([]string{"--foobar"}))
+}

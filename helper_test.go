@@ -2,6 +2,7 @@ package gitlab_ci_helper
 
 import (
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
@@ -32,4 +33,20 @@ func Test_Semversion_Matcher(t *testing.T) {
 	for _, v := range values {
 		assert.Equal(t, v.Expect, SemVersion.Match([]byte(v.Value)))
 	}
+}
+
+func Test_GetEnv(t *testing.T) {
+	assert.Equal(t, "Default Value", GetEnv("FOOBAR", "Default Value"))
+
+	os.Setenv("FOOBAR", "FOOBAR")
+	defer os.Unsetenv("FOOBAR")
+
+	assert.Equal(t, "FOOBAR", GetEnv("FOOBAR", "Default Value"))
+}
+
+func Test_Path(t *testing.T) {
+
+	p := Paths{"bonjour", "la terre!"}
+
+	assert.Equal(t, "[bonjour la terre!]", p.String())
 }

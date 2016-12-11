@@ -48,3 +48,20 @@ func Test_Ci_Dump_Revision(t *testing.T) {
 
 	os.Remove(path)
 }
+
+func Test_Ci_Revision_Help(t *testing.T) {
+	c := &CiDumpRevisionCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.True(t, len(c.Help()) > 0)
+	assert.True(t, len(c.Synopsis()) > 0)
+}
+
+func Test_Ci_Dump_Revision_InvalidRun(t *testing.T) {
+	c := &CiDumpRevisionCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.Equal(t, 1, c.Run([]string{"--foobar"}))
+}

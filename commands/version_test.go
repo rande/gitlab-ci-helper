@@ -34,3 +34,20 @@ func Test_Version_Extended(t *testing.T) {
 	assert.Equal(t, "1.0.0-TEST - sha1\n", ui.OutputWriter.String())
 	assert.Equal(t, 0, code)
 }
+
+func Test_Version_Help(t *testing.T) {
+	c := &VersionCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.True(t, len(c.Help()) > 0)
+	assert.True(t, len(c.Synopsis()) > 0)
+}
+
+func Test_Version_InvalidRun(t *testing.T) {
+	c := &VersionCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.Equal(t, 1, c.Run([]string{"--foobar"}))
+}

@@ -48,3 +48,20 @@ func Test_Project_List(t *testing.T) {
 		assert.Equal(t, expected, ui.OutputWriter.String())
 	})
 }
+
+func Test_Project_List_Help(t *testing.T) {
+	c := &ProjectsListCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.True(t, len(c.Help()) > 0)
+	assert.True(t, len(c.Synopsis()) > 0)
+}
+
+func Test_Project_List_InvalidRun(t *testing.T) {
+	c := &ProjectsListCommand{
+		Ui: &cli.MockUi{},
+	}
+
+	assert.Equal(t, 1, c.Run([]string{"--foobar"}))
+}
