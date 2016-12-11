@@ -9,7 +9,6 @@ script:
   - make install
   - make coverage-backend
   - goveralls -coverprofile=build/gitlabcihelper.coverage -service=travis-ci
-  - make test
   - make build
 
 deploy:
