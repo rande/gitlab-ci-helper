@@ -146,7 +146,7 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
     <ul>
         <li><b>Author:</b> {{ .Build.Commit.Author_Name }}</li>
         <li><b>Title:</b> {{ .Build.Commit.Title }}</li>
-        <li><b>Builds commit:</b> <a href="{{ .Project.WebUrl }}/commit/{{ .Build.Commit.Short_Id }}/builds">{{ .Project.WebUrl }}/commit/{{ .Build.Commit.Id }}/builds</a></li>
+        <li><b>Builds commit:</b> <a href="{{ .Project.WebUrl }}/commit/{{ .Build.Commit.Short_Id }}/pipelines">{{ .Project.WebUrl }}/commit/{{ .Build.Commit.Id }}/pipelines</a></li>
     </ul>
 
     <table class="build-status" style="width: 100%">
@@ -208,7 +208,7 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 			},
 			Title:       fmt.Sprintf("Jobs for %s - %s", project.Name, c.BuildRefName),
 			Body:        body.String(),
-			ExternalUrl: fmt.Sprintf("%s/commit/%s/builds", project.WebUrl, c.BuildRef),
+			ExternalUrl: fmt.Sprintf("%s/commit/%s/pipelines", project.WebUrl, c.BuildRef),
 		},
 		Author: &FlowdockAuthor{
 			Name:   "GitlabCi",
