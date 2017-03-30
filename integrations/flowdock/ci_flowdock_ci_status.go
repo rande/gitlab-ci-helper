@@ -61,10 +61,10 @@ func (c *CiFlowdockStatusCommand) Run(args []string) int {
 	cmdFlags.BoolVar(&c.Verbose, "verbose", false, "")
 	cmdFlags.BoolVar(&c.Last, "last", false, "")
 	cmdFlags.StringVar(&config.Token, "token", os.Getenv("FLOWDOCK_SOURCE_TOKEN"), "The room's token (default: env var FLOWDOCK_SOURCE_TOKEN)")
-	cmdFlags.StringVar(&c.BuildRef, "ref", os.Getenv("CI_BUILD_REF"), "The commit related to the build (default: env var CI_BUILD_REF)")
+	cmdFlags.StringVar(&c.BuildRef, "ref", helper.GetEnv("CI_COMMIT_SHA", os.Getenv("CI_BUILD_REF")), "The commit related to the build (default: env var CI_COMMIT_SHA/CI_BUILD_REF)")
 	cmdFlags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project related to the build (default: env var CI_PROJECT_ID)")
-	cmdFlags.StringVar(&c.BuildName, "name", os.Getenv("CI_BUILD_NAME"), "The build's name (default: env var CI_BUILD_NAME)")
-	cmdFlags.StringVar(&c.BuildRefName, "ref-name", os.Getenv("CI_BUILD_REF_NAME"), "The reference name (default: env var CI_BUILD_REF_NAME)")
+	cmdFlags.StringVar(&c.BuildName, "name", helper.GetEnv("CI_JOB_NAME", os.Getenv("CI_BUILD_NAME")), "The build's name (default: env var CI_BUILD_NAME)")
+	cmdFlags.StringVar(&c.BuildRefName, "ref-name", helper.GetEnv("CI_COMMIT_REF_NAME", os.Getenv("CI_BUILD_REF_NAME")), "The reference name (default: env var CI_COMMIT_REF_NAME/CI_BUILD_REF_NAME)")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1
@@ -260,10 +260,13 @@ Arguments:
   flow                The flow reference
 
 Options:
-  -ref                The commit related to the build (default: env var CI_BUILD_REF)
+  -ref                The commit related to the build (default:
+                        9.x: CI_COMMIT_SHA or 8.x: CI_BUILD_REF)
   -project            The project related to the build (default: env var CI_PROJECT_ID)
-  -name               The build's name (default: env var CI_BUILD_NAME)
-  -ref-name           The reference name (default: env var CI_BUILD_REF_NAME)
+  -name               The build's name (default:
+                        9.x: CI_JOB_NAME or 8.x: CI_BUILD_NAME)
+  -ref-name           The reference name (default:
+                        9.x: CI_COMMIT_REF_NAME or 8.x: CI_BUILD_REF_NAME)
   -last               Indicate if the current build is the last one
   -token              The flow's token (default: env var FLOWDOCK_SOURCE_TOKEN)
   -verbose            Add verbose information to the output
