@@ -49,9 +49,9 @@ func (c *S3ExtractCommand) Run(args []string) int {
 
 	flags.BoolVar(&c.Verbose, "verbose", false, "")
 
-	flags.StringVar(&c.Job, "job", os.Getenv("CI_BUILD_NAME"), "The job name")
-	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1)")
-	flags.StringVar(&c.RefName, "ref-name", os.Getenv("CI_BUILD_REF_NAME"), "The reference name (tag or branch)")
+	flags.StringVar(&c.Job, "job", helper.GetEnv("CI_JOB_NAME", os.Getenv("CI_BUILD_NAME")), "The job name")
+	flags.StringVar(&c.Ref, "ref", helper.GetEnv("CI_COMMIT_SHA", os.Getenv("CI_BUILD_REF")), "The reference (sha1)")
+	flags.StringVar(&c.RefName, "ref-name", helper.GetEnv("CI_COMMIT_REF_NAME", os.Getenv("CI_BUILD_REF_NAME")), "The reference name (tag or branch)")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 	flags.StringVar(&c.ExtractPath, "path", "./", "The project reference")
 	flags.StringVar(&c.TagMatcher, "tag-matcher", "(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)", "Regular expression to match tag (default: semver format)")
@@ -164,9 +164,9 @@ Usage: gitlab-ci-helper s3:extract
 Options:
 
   -verbose            Add verbose information to the output
-  -job                The job name (default: CI_BUILD_NAME)
-  -ref                The reference (sha1) (default: CI_BUILD_REF)
-  -ref-name           The reference name (default: CI_BUILD_REF_NAME)
+  -job                The job name (default: 9.x: CI_JOB_NAME and 8.x: CI_BUILD_NAME)
+  -ref                The reference (sha1) (default: 9.x: CI_COMMIT_SHA and 8.x: CI_BUILD_REF)
+  -ref-name           The reference name (default: 9.x: CI_COMMIT_REF_NAME and 8.x: CI_BUILD_REF_NAME)
   -project            The project reference (default: CI_PROJECT_ID)
   -region             The s3 region (default: AWS_REGION)
   -endpoint           The s3 endpoint (default: AWS_ENDPOINT)

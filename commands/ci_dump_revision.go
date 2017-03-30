@@ -8,6 +8,7 @@ package commands
 import (
 	"flag"
 	"github.com/mitchellh/cli"
+	helper "github.com/rande/gitlab-ci-helper"
 	"os"
 	"strings"
 )
@@ -28,7 +29,7 @@ func (c *CiDumpRevisionCommand) Run(args []string) int {
 
 	cmdFlags.BoolVar(&c.Verbose, "verbose", false, "")
 	cmdFlags.StringVar(&c.RevisionFile, "file", "REVISION", "The revision file")
-	cmdFlags.StringVar(&c.Reference, "ref", os.Getenv("CI_BUILD_REF"), "The sha1 (default: env var CI_BUILD_REF)")
+	cmdFlags.StringVar(&c.Reference, "ref", helper.GetEnv("CI_COMMIT_SHA", os.Getenv("CI_BUILD_REF")), "The sha1 (default: env var CI_BUILD_REF)")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1
