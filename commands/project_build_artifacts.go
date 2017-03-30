@@ -41,7 +41,7 @@ func (c *ProjectBuildArtifactCommand) Run(args []string) int {
 	flags.StringVar(&c.BuildId, "build", "", "The build number to get the artifacts")
 
 	flags.StringVar(&c.Job, "job", "", "The job to search the artifacts")
-	flags.StringVar(&c.Ref, "ref", os.Getenv("CI_BUILD_REF"), "The reference (sha1) to search the artifacts")
+	flags.StringVar(&c.Ref, "ref", helper.GetEnv("CI_COMMIT_SHA", os.Getenv("CI_BUILD_REF")), "The reference (sha1) to search the artifacts")
 	flags.StringVar(&c.Project, "project", os.Getenv("CI_PROJECT_ID"), "The project reference")
 
 	if err := flags.Parse(args); err != nil {
@@ -174,7 +174,8 @@ Options:
   -project=XX         The project reference (default: CI_PROJECT_ID)
   -build=XX           The build number used to retrieved the related artifact
   -job=XX             The job to search the build (must be used with -ref, default: package)
-  -ref=XX             The sha1 linked to the build (must be used with -stage, default: CI_BUILD_REF)
+  -ref=XX             The sha1 linked to the build (must be used with -stage,
+                       default 9.X: CI_COMMIT_SHA / 8.x: CI_BUILD_REF)
   -file=artifacts.zip The path to the artifact file (default: artifacts.zip)
   -path=./package     The path to extract the command. If not set, the artifact will not
                       be extracted.

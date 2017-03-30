@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"flag"
 	"github.com/mitchellh/cli"
+	helper "github.com/rande/gitlab-ci-helper"
 	"os"
 	"strings"
 )
@@ -61,12 +62,12 @@ func (c *CiDumpMetaCommand) Run(args []string) int {
 
 	meta := &Meta{
 		Build: &MetaBuild{
-			Id:      os.Getenv("CI_BUILD_ID"),
-			Ref:     os.Getenv("CI_BUILD_REF"),
-			RefName: os.Getenv("CI_BUILD_REF_NAME"),
-			Tag:     os.Getenv("CI_BUILD_TAG"),
-			Stage:   os.Getenv("CI_BUILD_STAGE"),
-			JobName: os.Getenv("CI_BUILD_NAME"),
+			Id:      helper.GetEnv("CI_JOB_ID", os.Getenv("CI_BUILD_ID")),
+			Ref:     helper.GetEnv("CI_COMMIT_SHA", os.Getenv("CI_BUILD_REF")),
+			RefName: helper.GetEnv("CI_COMMIT_REF_NAME", os.Getenv("CI_BUILD_REF_NAME")),
+			Tag:     helper.GetEnv("CI_COMMIT_TAG", os.Getenv("CI_BUILD_TAG")),
+			Stage:   helper.GetEnv("CI_JOB_STAGE", os.Getenv("CI_BUILD_STAGE")),
+			JobName: helper.GetEnv("CI_JOB_NAME", os.Getenv("CI_BUILD_NAME")),
 		},
 		Project: &MetaProject{
 			Id:  os.Getenv("CI_PROJECT_ID"),
