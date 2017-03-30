@@ -70,10 +70,13 @@
       flow                The flow reference
     
     Options:
-      -ref                The commit related to the build (default: env var CI_BUILD_REF)
+      -ref                The commit related to the build (default:
+                            9.x: CI_COMMIT_SHA or 8.x: CI_BUILD_REF)
       -project            The project related to the build (default: env var CI_PROJECT_ID)
-      -name               The build's name (default: env var CI_BUILD_NAME)
-      -ref-name           The reference name (default: env var CI_BUILD_REF_NAME)
+      -name               The build's name (default:
+                            9.x: CI_JOB_NAME or 8.x: CI_BUILD_NAME)
+      -ref-name           The reference name (default:
+                            9.x: CI_COMMIT_REF_NAME or 8.x: CI_BUILD_REF_NAME)
       -last               Indicate if the current build is the last one
       -token              The flow's token (default: env var FLOWDOCK_SOURCE_TOKEN)
       -verbose            Add verbose information to the output
