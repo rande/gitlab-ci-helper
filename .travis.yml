@@ -2,7 +2,13 @@ language: go
 
 go: [1.6]
 
-sudo: false
+sudo: required
+
+services :
+  - docker
+
+before_install:
+  - docker pull golang:1.6-alpine
 
 script:
   - go get github.com/mattn/goveralls
@@ -21,6 +27,7 @@ deploy:
         - build/linux-386-gitlab-ci-helper
         - build/linux-arm-gitlab-ci-helper
         - build/linux-arm64-gitlab-ci-helper
+        - build/alpine-amd64-gitlab-ci-helper
     skip_cleanup: true
     overwrite: true
     on:
