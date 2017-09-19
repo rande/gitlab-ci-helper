@@ -21,7 +21,7 @@ var (
 func main() {
 	ui := &cli.BasicUi{Writer: os.Stdout}
 
-	c := cli.NewCLI("gitlab-ci-helper", "0.0.1-DEV")
+	c := cli.NewCLI("gitlab-ci-helper", Version)
 	c.Args = os.Args[1:]
 
 	c.Commands = map[string]cli.CommandFactory{
