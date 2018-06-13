@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -8,9 +8,10 @@ package gitlab_ci_helper
 import (
 	"archive/zip"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Zip_No_Error(t *testing.T) {

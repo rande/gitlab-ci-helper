@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -10,12 +10,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/mitchellh/cli"
-	helper "github.com/rande/gitlab-ci-helper"
 	"io"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/mitchellh/cli"
+	helper "github.com/rande/gitlab-ci-helper"
 )
 
 type HipChatConfig struct {
@@ -54,12 +55,12 @@ func (c *CiNotificationHipchatCommand) Run(args []string) int {
 
 	config := &HipChatConfig{}
 	message := &HipChatMessage{
-		//Card: &HipChatCard{
-		//	Description: &HipChatDescription {
-		//		Value: 1,
-		//		Format: "html",
-		//	},
-		//},
+	//Card: &HipChatCard{
+	//	Description: &HipChatDescription {
+	//		Value: 1,
+	//		Format: "html",
+	//	},
+	//},
 	}
 
 	cmdFlags := flag.NewFlagSet("ci:notification:hipchat", flag.ContinueOnError)

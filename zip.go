@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -7,11 +7,12 @@ package gitlab_ci_helper
 
 import (
 	"errors"
-	"github.com/rande/garchive"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/rande/garchive"
 )
 
 func Unzip(archive, target string) error {

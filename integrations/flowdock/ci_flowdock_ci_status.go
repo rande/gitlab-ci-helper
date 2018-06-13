@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -10,14 +10,15 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/mitchellh/cli"
-	gitlab "github.com/plouc/go-gitlab-client"
-	helper "github.com/rande/gitlab-ci-helper"
 	"html/template"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/mitchellh/cli"
+	gitlab "github.com/plouc/go-gitlab-client"
+	helper "github.com/rande/gitlab-ci-helper"
 )
 
 type CiFlowdockStatusCommand struct {

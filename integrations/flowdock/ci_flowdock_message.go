@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -10,10 +10,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/mitchellh/cli"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/mitchellh/cli"
 )
 
 type CiFlowdockMessageCommand struct {
