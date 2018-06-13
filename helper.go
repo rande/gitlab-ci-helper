@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	gitlab "github.com/plouc/go-gitlab-client"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -18,6 +17,14 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
+	"github.com/aws/aws-sdk-go/aws/ec2metadata"
+	"github.com/aws/aws-sdk-go/aws/session"
+	gitlab "github.com/plouc/go-gitlab-client"
 )
 
 type Paths []string
@@ -34,6 +41,32 @@ func (p *Paths) Set(value string) error {
 
 var SemVersion = regexp.MustCompile("(v|)[0-9]{1,}\\.[0-9]{1,}\\.[0-9]{1,}(-[A-Za-z]*|)")
 
+func GetAwsCredentials(profile string) (*credentials.Credentials, error) {
+	sess := session.Must(session.NewSession())
+
+	chainProvider := credentials.NewChainCredentials([]credentials.Provider{
+		&credentials.EnvProvider{},
+		&credentials.SharedCredentialsProvider{
+			Filename: os.Getenv("HOME") + "/.aws/credentials",
+			Profile:  profile,
+		},
+		&ec2rolecreds.EC2RoleProvider{
+			Client: ec2metadata.New(sess, &aws.Config{
+				HTTPClient: &http.Client{Timeout: 10 * time.Second},
+			}),
+			ExpiryWindow: 0,
+		},
+	})
+
+	_, err := chainProvider.Get()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return chainProvider, nil
+}
+
 func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {
 	pId, err := strconv.ParseInt(p, 10, 32)
 
@@ -42,7 +75,7 @@ func GetProject(p string, client *gitlab.Gitlab) (*gitlab.Project, error) {
 		paths := strings.Split(p, "/")
 
 		if len(paths) != 2 {
-			return nil, errors.New("Error: Invalid project format, must be namespace/project-name")
+			return nil, fmt.Errorf("Error: Invalid project format, must be namespace/project-name, project=%s, err=%s", p, err)
 		}
 
 		projects, _ := client.Projects()

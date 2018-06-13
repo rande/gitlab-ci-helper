@@ -40,7 +40,7 @@ build: ## build binaries
 	GOOS=linux  GOARCH=arm   go build -ldflags "-X main.RefLog=$(SHA1) -s -w" -o build/linux-arm-gitlab-ci-helper    cli/main.go
 	GOOS=linux  GOARCH=arm64 go build -ldflags "-X main.RefLog=$(SHA1) -s -w" -o build/linux-arm64-gitlab-ci-helper  cli/main.go
     ifneq ("", "$(shell which docker)")
-		docker run --rm -v $(shell pwd):/usr/src/myapp -v $(GOPATH):/usr/src/myapp/vendor -w /usr/src/myapp -e "GOPATH=/usr/src/myapp/vendor:/go" -e GOOS=linux -e GOARCH=amd64 golang:1.6-alpine go build -ldflags "-X main.RefLog=$(SHA1) -s -w" -o build/alpine-amd64-gitlab-ci-helper cli/main.go
+		docker run --rm -v $(shell pwd):/usr/src/myapp -v $(GOPATH):/usr/src/myapp/vendor -w /usr/src/myapp -e "GOPATH=/usr/src/myapp/vendor:/go" -e GOOS=linux -e GOARCH=amd64 golang:1.9-alpine go build -ldflags "-X main.RefLog=$(SHA1) -s -w" -o build/alpine-amd64-gitlab-ci-helper cli/main.go
     endif
 
 coverage-backend: ## run coverage tests
