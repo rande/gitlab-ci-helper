@@ -8,19 +8,17 @@ package commands
 import (
 	"flag"
 	"fmt"
+	"os"
+	"regexp"
+	"strings"
+	"time"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/mitchellh/cli"
 	gitlab "github.com/plouc/go-gitlab-client"
 	helper "github.com/rande/gitlab-ci-helper"
-	"os"
-	"strings"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"regexp"
-	"time"
 )
 
 type S3ArchiveCommand struct {
@@ -105,16 +103,7 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 		return 1
 	}
 
-	chainProvider := credentials.NewChainCredentials([]credentials.Provider{
-		&credentials.EnvProvider{},
-		&credentials.SharedCredentialsProvider{
-			Filename: os.Getenv("HOME") + "/.aws/credentials",
-			Profile:  c.AwsProfile,
-		},
-		&ec2rolecreds.EC2RoleProvider{},
-	})
-
-	_, err = chainProvider.Get()
+	credentials, err := helper.GetAwsCredentials(c.AwsProfile)
 
 	if err != nil {
 		c.Ui.Output(fmt.Sprintf("Unable to load credentials: %s", err))
@@ -126,7 +115,7 @@ func (c *S3ArchiveCommand) Run(args []string) int {
 		Region:           aws.String(c.AwsRegion),
 		Endpoint:         aws.String(c.AwsEndPoint),
 		S3ForcePathStyle: aws.Bool(true),
-		Credentials:      chainProvider,
+		Credentials:      credentials,
 	}
 
 	s3client := s3.New(session.New(), awsConfig)

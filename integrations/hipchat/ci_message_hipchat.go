@@ -54,12 +54,12 @@ func (c *CiNotificationHipchatCommand) Run(args []string) int {
 
 	config := &HipChatConfig{}
 	message := &HipChatMessage{
-	//Card: &HipChatCard{
-	//	Description: &HipChatDescription {
-	//		Value: 1,
-	//		Format: "html",
-	//	},
-	//},
+		//Card: &HipChatCard{
+		//	Description: &HipChatDescription {
+		//		Value: 1,
+		//		Format: "html",
+		//	},
+		//},
 	}
 
 	cmdFlags := flag.NewFlagSet("ci:notification:hipchat", flag.ContinueOnError)
