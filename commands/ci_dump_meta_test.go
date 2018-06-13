@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -8,12 +8,13 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/cli"
-	helper "github.com/rande/gitlab-ci-helper"
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"github.com/mitchellh/cli"
+	helper "github.com/rande/gitlab-ci-helper"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Ci_Dump_Meta(t *testing.T) {

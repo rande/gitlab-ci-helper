@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -7,10 +7,11 @@ package commands
 
 import (
 	"flag"
-	"github.com/mitchellh/cli"
-	helper "github.com/rande/gitlab-ci-helper"
 	"os"
 	"strings"
+
+	"github.com/mitchellh/cli"
+	helper "github.com/rande/gitlab-ci-helper"
 )
 
 type CiDumpRevisionCommand struct {

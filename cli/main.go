@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -6,11 +6,12 @@
 package main
 
 import (
+	"os"
+
 	"github.com/mitchellh/cli"
 	"github.com/rande/gitlab-ci-helper/commands"
 	"github.com/rande/gitlab-ci-helper/integrations/flowdock"
 	"github.com/rande/gitlab-ci-helper/integrations/hipchat"
-	"os"
 )
 
 var (

@@ -1,4 +1,4 @@
-// Copyright © 2016 Thomas Rabaix <thomas.rabaix@gmail.com>.
+// Copyright © 2016-present Thomas Rabaix <thomas.rabaix@gmail.com>.
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
@@ -6,9 +6,10 @@
 package flowdock
 
 import (
+	"testing"
+
 	"github.com/mitchellh/cli"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_CiFlowdockMessageCommand_Help(t *testing.T) {
