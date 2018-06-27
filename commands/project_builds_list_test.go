@@ -25,14 +25,14 @@ func Test_Project_BuildsList_From_Args(t *testing.T) {
 
 	reqs := []*helper.FakeRequest{
 		{
-			Path:   "/api/v3/projects/3",
+			Path:   "/api/v4/projects/3",
 			Method: "GET",
 			Response: &http.Response{
 				Body: fpProject,
 			},
 		},
 		{
-			Path:   "/api/v3/projects/3/builds",
+			Path:   "/api/v4/projects/3/builds",
 			Method: "GET",
 			Response: &http.Response{
 				Body: fpBuild,
