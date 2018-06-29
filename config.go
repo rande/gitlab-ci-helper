@@ -34,7 +34,7 @@ func NewConfig() *Config {
 	}
 
 	if gitlab.ApiPath == "" {
-		gitlab.ApiPath = "/api/v3"
+		gitlab.ApiPath = "/api/v4"
 	}
 
 	return &Config{

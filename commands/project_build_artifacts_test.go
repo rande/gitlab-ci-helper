@@ -38,7 +38,7 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 
 	reqs := []*helper.FakeRequest{
 		{
-			Path:   "/api/v3/projects/3",
+			Path:   "/api/v4/projects/3",
 			Method: "GET",
 			Response: &http.Response{
 				Body:   fpProject,
@@ -46,7 +46,7 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 			},
 		},
 		{
-			Path:   "/api/v3/projects",
+			Path:   "/api/v4/projects",
 			Method: "GET",
 			Response: &http.Response{
 				Body:   fpProjects,
@@ -54,7 +54,7 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 			},
 		},
 		{
-			Path:   "/api/v3/projects/3/builds",
+			Path:   "/api/v4/projects/3/builds",
 			Method: "GET",
 			Response: &http.Response{
 				Body:   fpBuilds,
@@ -62,7 +62,7 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 			},
 		},
 		{
-			Path:   "/api/v3/projects/3/repository/commits/889935cf4d3e7558ae6c0d4dd62e20ea600f5a57/builds",
+			Path:   "/api/v4/projects/3/repository/commits/889935cf4d3e7558ae6c0d4dd62e20ea600f5a57/builds",
 			Method: "GET",
 			Response: &http.Response{
 				Body:   fpCommits,
@@ -70,7 +70,7 @@ func Test_Project_Builds_Artifacts(t *testing.T) {
 			},
 		},
 		{
-			Path:   "/api/v3/projects/3/builds/69/artifacts",
+			Path:   "/api/v4/projects/3/builds/69/artifacts",
 			Method: "GET",
 			Response: &http.Response{
 				Body: fpArchive,

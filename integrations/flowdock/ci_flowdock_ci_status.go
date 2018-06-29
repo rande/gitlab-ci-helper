@@ -278,7 +278,7 @@ Gitlab's credentials are retrieved from environment:
 
   GITLAB_HOST         The gitlab host
   GITLAB_TOKEN        The user's token
-  GITLAB_API_PATH     (optional) the api path, default to: "/api/v3"
+  GITLAB_API_PATH     (optional) the api path, default to: "/api/v4"
 
 `, flowdockConfiguration)
 

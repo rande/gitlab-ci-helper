@@ -23,7 +23,7 @@ func Test_Project_List(t *testing.T) {
 
 	reqs := []*helper.FakeRequest{
 		{
-			Path:   "/api/v3/projects",
+			Path:   "/api/v4/projects",
 			Method: "GET",
 			Response: &http.Response{
 				Body: fp,
