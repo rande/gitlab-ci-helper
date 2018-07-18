@@ -2,6 +2,9 @@ language: go
 
 go: [1.9]
 
+# this might be useful when working on a fork for example
+go_import_path: github.com/rande/gitlab-ci-helper
+
 sudo: required
 
 services :

@@ -17,7 +17,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/mitchellh/cli"
-	gitlab "github.com/plouc/go-gitlab-client"
+	gitlab "gopkg.in/plouc/go-gitlab-client.v1"
 	helper "github.com/rande/gitlab-ci-helper"
 )
 
