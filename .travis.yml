@@ -28,6 +28,7 @@ deploy:
         - build/linux-arm-gitlab-ci-helper
         - build/linux-arm64-gitlab-ci-helper
         - build/alpine-amd64-gitlab-ci-helper
+        - build/checksums.txt
     skip_cleanup: true
     overwrite: true
     on:
