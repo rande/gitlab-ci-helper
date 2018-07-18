@@ -1,0 +1,35 @@
+image: golang:1.10.3
+
+stages:
+  - test
+  - build
+  - use
+
+test:
+  stage: test
+  before_script:
+    # see https://gitlab.com/gitlab-org/gitlab-runner/issues/1918
+    # CI_PROJECT_DIR didn't worked…
+    - mkdir -p $GOPATH/src/github.com/rande
+    - ln -s $CI_PROJECT_DIR $GOPATH/src/github.com/rande/gitlab-ci-helper
+    - cd $GOPATH/src/github.com/rande/gitlab-ci-helper
+    - make install --no-print-directory
+  script:
+    - make test --no-print-directory
+
+build:
+  stage: build
+  before_script:
+    # see https://gitlab.com/gitlab-org/gitlab-runner/issues/1918
+    # CI_PROJECT_DIR didn't worked…
+    - mkdir -p $GOPATH/src/github.com/rande
+    - ln -s $CI_PROJECT_DIR $GOPATH/src/github.com/rande/gitlab-ci-helper
+    - cd $GOPATH/src/github.com/rande/gitlab-ci-helper
+    - make install --no-print-directory
+  script:
+    - make build --no-print-directory
+  artifacts:
+    when:      always
+    expire_in: 1 day
+    paths:
+      - build
