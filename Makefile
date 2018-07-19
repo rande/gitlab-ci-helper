@@ -14,7 +14,7 @@ default: test build ## test and build binaries
 install: ## install dependencies
 	go list -f '{{range .Imports}}{{.}} {{end}}' ./... | xargs go get -v
 	go list -f '{{range .TestImports}}{{.}} {{end}}' ./... | xargs go get -v
-	go get github.com/wadey/gocovmerge
+	go get -v github.com/wadey/gocovmerge
 
 update: ## update dependencies
 	go get -u all
