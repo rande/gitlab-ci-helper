@@ -20,7 +20,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds"
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/session"
-	gitlab "github.com/plouc/go-gitlab-client"
+	gitlab "gopkg.in/plouc/go-gitlab-client.v1"
 )
 
 type Paths []string
